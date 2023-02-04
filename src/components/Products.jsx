@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { add } from "../store/CartSlice";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+
+  const dispatch = useDispatch();
+
+  const handleAdd = (product) => {
+    dispatch(add(product));
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -22,7 +30,6 @@ const Products = () => {
           <p
             style={{
               maxWidth: "300px",
-
               whiteSpace: "nowrap",
               overflow: "hidden",
               textOverflow: "ellipsis",
@@ -31,7 +38,10 @@ const Products = () => {
           >
             {product.description}
           </p>
-          <button className="px-3 text-white font-bold bg-green-600 border border-slate-600 hover:border-green-700 rounded-3xl">
+          <button
+            onClick={() => handleAdd(product)}
+            className="px-3 text-white font-bold bg-green-600 border border-slate-600 hover:border-green-700 rounded-3xl"
+          >
             Add to cart
           </button>
         </div>
